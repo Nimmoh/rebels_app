@@ -13,17 +13,18 @@ class TeamFolderPage extends StatefulWidget {
 
 class _TeamFolderPageState extends State<TeamFolderPage> {
   double availableScreenWidth = 0;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     availableScreenWidth = MediaQuery.of(context).size.width -50;
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
       body: Column(children: [
         Container(
           padding: const EdgeInsets.symmetric(vertical: 25,horizontal: 25),
           height: 170,
-          decoration: BoxDecoration(color: Color.fromARGB(181, 151, 7, 7)),
+          decoration: BoxDecoration(color: Colors.blue),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -37,7 +38,7 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
               color: Colors.black,
             ),
             ),
-            Text("Teams",
+            Text("Teams Quid",
             style: TextStyle(fontSize: 17,
             fontWeight: FontWeight.bold,
             color: Colors.white),
@@ -57,7 +58,7 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
                 size: 18,
                 color: Colors.white,
                 ),
-                 onPressed: (){},
+                onPressed: (){},
                 ),
             ),
             const SizedBox(width: 10),
@@ -72,7 +73,7 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
                 size: 18,
                 color: Colors.white,
                 ),
-                 onPressed: (){},
+                onPressed: (){},
                 ),
             ),
             ],
@@ -134,7 +135,7 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
             ],
           ),
         ),
-       
+      
         const SizedBox(height: 15,),
 
         const Divider(height: 20,),
@@ -152,20 +153,112 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
           Row(
             children: [
               buildFileSizedColumn('sketch', 'desktop','sketch'),
-              SizedBox(width: availableScreenWidth *.15,)
+              SizedBox(width: availableScreenWidth *.03),
               buildFileSizedColumn('sketch', 'mobile','sketch'),
-              buildFileSizedColumn('sketch', 'extension','sketch'),
+              SizedBox(width: availableScreenWidth *.03),
+              buildFileSizedColumn('prd', 'extension','sketch'),
+              SizedBox(width: availableScreenWidth *.03),
               
             ],
-          )
+          ),
+          Divider(
+            height: 60,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [Text("Projects",
+            style: TextStyle(fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.green,),
+            ),
+            Text("Create New",
+            style: TextStyle(fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,),
+            ),
+
+            ],
+          ),
+          SizedBox(height: 20),
+          buildProjectRow("Recents"),
+          buildProjectRow("ChatBox"),
+          buildProjectRow("TimeNotes"),
+          buildProjectRow("Others"),
           ],
         ),
         ),
 
       ],
       ),
+      floatingActionButton: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(color: Colors.black)
+          ]
+        ),
+      ),
+      //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (Index) {
+          setState(() {
+            selectedIndex = Index;
+          });
+          
+        },
+        currentIndex: selectedIndex,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: [
+        BottomNavigationBarItem(icon: Icon(Icons.access_time),
+        label: "Time",
+        ),
+        BottomNavigationBarItem(icon: Icon(Icons.add_box),
+        label: "Folder",
+        ),
+
+      ],
+      ),
       
     );
+  }
+
+  Container buildProjectRow(String folderName) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 8),
+          padding: EdgeInsets.symmetric(horizontal: 20,),
+          height: 65,
+          decoration: BoxDecoration(color: Colors.grey,
+          borderRadius: BorderRadiusDirectional.circular(15),
+          ),
+          child: Row(
+            children: [Icon(Icons.folder,
+            
+            color: Colors.blue,
+            ),
+        
+          SizedBox(width: 12),
+            Text(folderName,
+            style: TextStyle(fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            ),
+            ),
+            
+            ],
+            ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: Icon(
+          //     Icons.more_vert_rounded,
+          //     color: Colors.grey,
+          //     ),
+          //     ),
+          
+        
+        );
   }
 
   Column buildFileSizedColumn(String image, String filename, String extension) {
@@ -179,7 +272,7 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
                   ),
                   padding: const EdgeInsets.all(10),
                   height: 50,
-                child: Image.asset('assets/images/$image.jpg'),
+                child: Image.asset('assets/images/pic2.jpg'),
               ),
               RichText(
                 text: TextSpan(
@@ -193,7 +286,7 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
                     text: extension,
                     style: TextStyle(
                   color: Colors.grey,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w700,
                   fontSize: 11,
                 ),
                 ),
@@ -220,7 +313,7 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
         
               const SizedBox(height: 20),
         
-               Text(title,
+              Text(title,
               style: const TextStyle(fontSize: 10,
               fontWeight: FontWeight.bold),
               ),
